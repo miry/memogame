@@ -6,15 +6,25 @@
   <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
   <script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
 
-  <!-- Place for libs -->
+  <script type="text/javascript" src="../memogame.js"></script>
 
   <script type="text/javascript" src="tests.js"></script>
+
+  <script type="text/javascript">
+    (function(){
+//      $("live_board").memogame();
+    })(this);
+  </script>
 </head>
 <body>
 
   <fixtures>
-
+    <board></board>
   </fixtures>
+
+  <preview>
+    <live_board></live_board>
+  </preview>
 
   <h1 id="qunit-header">QUnit example</h1>
   <ol id="qunit-tests"></ol>

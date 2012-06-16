@@ -17,6 +17,8 @@ GEM
     guard-coffeescript (1.0.0)
       coffee-script (>= 2.2.0)
       guard (>= 1.1.0)
+    guard-shell (0.5.1)
+      guard (>= 1.1.0)
     listen (0.4.3)
       rb-fchange (~> 0.0.5)
       rb-fsevent (~> 0.9.1)
@@ -35,3 +37,4 @@ PLATFORMS
 DEPENDENCIES
   guard-bundler
   guard-coffeescript
+  guard-shell
