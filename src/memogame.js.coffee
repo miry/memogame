@@ -1,6 +1,8 @@
-class Memogame
+class window.Memogame
   constructor: ()->
-    @init_game()
+    init_game()
 
   init_game = () ->
-    new Game
+    scope = $('live_board')
+    elements = [new CircleElement scope, new CircleElement scope, new CircleElement scope, new CircleElement scope]
+    new Game elements

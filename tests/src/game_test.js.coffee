@@ -5,6 +5,9 @@ module "GameTest",
 test "should create a new instance", () ->
   ok @subject, "Initialize a new instance of the Game"
 
-test "should init difficult level for the game", () ->
-  game = new Game 10
-  equal game.difficult_level, 10 
+test "should start a round with first level", () ->
+  game = new Game
+  round = game.play_round()
+  equal round.difficult_level, 1, "First level"
+
+
