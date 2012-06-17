@@ -5,8 +5,13 @@ module "GameTest",
 test "should create a new instance", () ->
   ok @subject, "Initialize a new instance of the Game"
 
-test "should start a round with first level", () ->
+test "should not start if there are no elements", ()->
   game = new Game
+  equal game.play_round(), undefined
+  equal game.current_round, null
+
+test "should start a round with first level", () ->
+  game = new Game([new Element])
   round = game.play_round()
   equal round.difficult_level, 1, "First level"
 

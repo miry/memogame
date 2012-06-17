@@ -1,8 +1,15 @@
 class window.Memogame
   constructor: ()->
-    init_game()
+    @game = init_game()
 
   init_game = () ->
     scope = $('live_board')
-    elements = [new CircleElement scope, new CircleElement scope, new CircleElement scope, new CircleElement scope]
-    new Game elements
+    elements = (new CircleElement(scope) for i in [0..4])
+    new Game elements,
+      on_success: (game)->
+        alert("Round #{game.level+1}")
+
+      on_game_over: (game)->
+        alert("Game Over")
+        if(confirm("Do you want try again?"))
+          game.start()

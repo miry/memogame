@@ -9,6 +9,13 @@ test("should respond to to highlight", function() {
   return ok(this.subject.highlight(), "there are no method highlight");
 });
 
+test("should increment id", function() {
+  var element;
+  equal(this.subject.id, Element.last_id);
+  element = new Element;
+  return equal(element.id, this.subject.id + 1);
+});
+
 module("CircleElementTest", {
   setup: function() {
     return this.scope = $("board");
@@ -24,6 +31,13 @@ test("should add two circles", function() {
   return equal(this.scope.find("element").length, 2, "Two elements in body");
 });
 
+test("should highlight an element", function() {
+  var element;
+  element = new CircleElement(this.scope);
+  element.highlight();
+  return ok(element.item.hasClass('highlight-element'), "Checking class highlight");
+});
+
 module("GameTest", {
   setup: function() {
     return this.subject = new Game;
@@ -34,16 +48,23 @@ test("should create a new instance", function() {
   return ok(this.subject, "Initialize a new instance of the Game");
 });
 
+test("should not start if there are no elements", function() {
+  var game;
+  game = new Game;
+  equal(game.play_round(), void 0);
+  return equal(game.current_round, null);
+});
+
 test("should start a round with first level", function() {
   var game, round;
-  game = new Game;
+  game = new Game([new Element]);
   round = game.play_round();
   return equal(round.difficult_level, 1, "First level");
 });
 
 module("RoundTest", {
   setup: function() {
-    return this.subject = new Round;
+    return this.subject = new Round(10, [new Element, new Element]);
   }
 });
 
@@ -52,14 +73,10 @@ test("should create a new instance", function() {
 });
 
 test("should init difficult level for the game", function() {
-  var game;
-  game = new Round(10, [new Element, new Element]);
-  return equal(game.difficult_level, 10);
+  return equal(this.subject.difficult_level, 10);
 });
 
 test("should highlight elements and return indexes ones", function() {
-  var game;
-  game = new Round(10, [new Element, new Element]);
-  ok(game.start(), "Start the round");
-  return equal(game.route.length, 10, "The lenght of the route should equal to level number");
+  ok(this.subject.start(), "Start the round");
+  return equal(this.subject.route.length, 10, "The lenght of the route should equal to level number");
 });
