@@ -51,7 +51,7 @@ test("should not start if there are no elements", function() {
   var game;
 
   game = new Game;
-  equal(game.play_round(), void 0);
+  equal(game.playRound(), void 0);
   return equal(game.currentRound, null);
 });
 
@@ -59,7 +59,7 @@ test("should start a round with first level", function() {
   var game, round;
 
   game = new Game([new BaseElement()]);
-  round = game.play_round();
+  round = game.playRound();
   return equal(round.difficult_level, 1, "First level");
 });
 module("RoundTest", {

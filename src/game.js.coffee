@@ -17,9 +17,9 @@ class window.Game
       @bindClickOnElement element
 
   start: () ->
-    @play_round()
+    @playRound()
 
-  play_round: () ->
+  playRound: () ->
     if(@elements.length > 0)
       @currentRound = new Round ++@level, @elements
 
@@ -34,7 +34,7 @@ class window.Game
       if typeof(@options.success) == "function"
         @options.success(@)
 
-      @play_round()
+      @playRound()
     , @options.timeout
 
   reset: () ->

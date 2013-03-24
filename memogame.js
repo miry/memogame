@@ -133,10 +133,10 @@
     }
 
     Game.prototype.start = function() {
-      return this.play_round();
+      return this.playRound();
     };
 
-    Game.prototype.play_round = function() {
+    Game.prototype.playRound = function() {
       if (this.elements.length > 0) {
         return this.currentRound = new Round(++this.level, this.elements);
       }
@@ -156,7 +156,7 @@
         if (typeof _this.options.success === "function") {
           _this.options.success(_this);
         }
-        return _this.play_round();
+        return _this.playRound();
       }, this.options.timeout);
     };
 

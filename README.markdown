@@ -19,3 +19,20 @@ It is a simple game to check your memory.
 ## Test
 
 To run tests you should open in browser `tests/index.html`
+
+
+## Usage
+
+Add simple tags to the page.
+
+```html
+<preview>
+  <live_board></live_board>
+</preview>
+```
+
+And run script
+
+```javascript
+new Memogame().game.playRound()
+```
