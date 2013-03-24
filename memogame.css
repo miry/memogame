@@ -1,0 +1,48 @@
+preview {
+    display: block;
+    height: 100px;
+}
+
+element {
+    /*position: absolute;*/
+    /*bottom: 0px;*/
+    height: 70px;
+    width: 70px;
+}
+
+element {
+    width: 46px;
+    height: 46px;
+    display: block;
+    text-indent: -9000px;
+    -moz-border-radius: 23px;
+    -webkit-border-radius: 23px;
+    border-radius: 23px;
+    cursor: pointer;
+    opacity: 0.9;
+    float: left;
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    background-size: 17px 25px;
+    /*margin: -23px 0 0 -23px;*/
+    margin: 25px 0 0 25px;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    background-color: black;
+}
+
+element.highlight-element {
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    opacity: 0.6;
+    margin: -10px 0 0 0px;
+    background-size: 22px 32px;
+    background-color: #a8872d;
+}

@@ -133,6 +133,9 @@
     }
 
     Game.prototype.start = function() {
+      if (typeof this.options.start === "function") {
+        this.options.start(this);
+      }
       return this.playRound();
     };
 
@@ -200,31 +203,43 @@
 }).call(this);
 (function() {
   window.Memogame = (function() {
-    var init_game;
+    Memogame.defaults = {
+      elements_count: 5,
+      scope: 'live_board',
+      element_shape: 'circle'
+    };
 
-    function Memogame() {
-      this.game = init_game();
+    function Memogame(options) {
+      this.options = $.extend({}, Memogame.defaults, options);
+      this.options.scope = $(this.options.scope);
+      this.initElements();
+      this.initGame();
     }
 
-    init_game = function() {
-      var elements, i, scope;
+    Memogame.prototype.initElements = function() {
+      var i;
 
-      scope = $('live_board');
-      elements = (function() {
-        var _i, _results;
+      return this.elements = (function() {
+        var _i, _ref, _results;
 
         _results = [];
-        for (i = _i = 0; _i <= 4; i = ++_i) {
-          _results.push(new CircleElement(scope));
+        for (i = _i = 1, _ref = this.options.elements_count; 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
+          _results.push(new CircleElement(this.options.scope));
         }
         return _results;
-      })();
-      return new Game(elements, {
+      }).call(this);
+    };
+
+    Memogame.prototype.initGame = function() {
+      return this.game = new Game(this.elements, {
+        start: function(game) {
+          return alert("Round 1");
+        },
         success: function(game) {
           return alert("Round " + (game.level + 1));
         },
         game_over: function(game) {
-          alert("Game Over");
+          alert("Game Over!");
           if (confirm("Do you want try again?")) {
             return game.start();
           }
@@ -238,9 +253,7 @@
 
 }).call(this);
 (function() {
-
   window.Round = (function() {
-
     Round.defaults = {
       timeout: 400
     };
@@ -261,6 +274,7 @@
 
     Round.prototype.play = function() {
       var i, _i, _ref;
+
       this._queue = function() {
         return true;
       };
@@ -272,8 +286,10 @@
 
     Round.prototype.generate_route = function() {
       var i;
+
       return this.route = (function() {
         var _i, _ref, _results;
+
         _results = [];
         for (i = _i = 0, _ref = this.difficult_level - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
           _results.push(this.elements[Math.floor(Math.random() * this.elements.length)]);
@@ -285,6 +301,7 @@
     Round.prototype.add_to_queue = function(element) {
       var _old_queue,
         _this = this;
+
       _old_queue = this._queue;
       return this._queue = function() {
         return setTimeout(function() {

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>MemoGame Demo</title>
+
+  <!-- Le styles -->
+  <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"
+        rel="stylesheet">
+  <link
+      href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css"
+      rel="stylesheet">
+
+  <link rel="stylesheet" href="../memogame.css" type="text/css" media="screen"/>
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fluid-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse"
+              data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="./index.html"></a>
+
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="active">
+            <a href="./index.html">Demo</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h1>MemoGame Demo</h1>
+
+  <preview>
+    <live_board></live_board>
+  </preview>
+
+  <button class="btn btn-primary" id='start_game'>Start</button>
+</div>
+
+</body>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="../memogame.js"></script>
+<script language="javascript">
+  var game = new Memogame().game;
+
+  $('#start_game').click(function(){ game.start() });
+</script>
+
+</html>

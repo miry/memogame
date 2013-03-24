@@ -17,6 +17,8 @@ class window.Game
       @bindClickOnElement element
 
   start: () ->
+    if typeof(@options.start) == "function"
+      @options.start(@)
     @playRound()
 
   playRound: () ->
