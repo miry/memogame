@@ -1,15 +1,3 @@
-module "ElementTest",
-  setup: () ->
-    @subject = new Element
-
-test "should respond to to highlight", ()->
-  ok @subject.highlight(), "there are no method highlight"
-
-test "should increment id", ()->
-  equal @subject.id, Element.last_id
-  element = new Element
-  equal element.id, @subject.id + 1
-
 module "CircleElementTest",
   setup: ()->
     @scope = $("board")

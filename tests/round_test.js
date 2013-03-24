@@ -1,7 +1,6 @@
-
 module("RoundTest", {
   setup: function() {
-    return this.subject = new Round(10, [new Element, new Element]);
+    return this.subject = new Round(10, [new BaseElement, new BaseElement]);
   }
 });
 

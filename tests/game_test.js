@@ -1,4 +1,3 @@
-
 module("GameTest", {
   setup: function() {
     return this.subject = new Game;
@@ -11,14 +10,16 @@ test("should create a new instance", function() {
 
 test("should not start if there are no elements", function() {
   var game;
+
   game = new Game;
   equal(game.play_round(), void 0);
-  return equal(game.current_round, null);
+  return equal(game.currentRound, null);
 });
 
 test("should start a round with first level", function() {
   var game, round;
-  game = new Game([new Element]);
+
+  game = new Game([new BaseElement()]);
   round = game.play_round();
   return equal(round.difficult_level, 1, "First level");
 });

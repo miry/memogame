@@ -1,6 +1,6 @@
 module "RoundTest",
   setup: () ->
-    @subject = new Round 10, [new Element, new Element]
+    @subject = new Round 10, [new BaseElement, new BaseElement]
 
 test "should create a new instance", () ->
   ok @subject, "Initialize a new instance of the Round"

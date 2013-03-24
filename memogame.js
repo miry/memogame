@@ -1,91 +1,70 @@
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  window.CircleElement = (function(_super) {
-
-    __extends(CircleElement, _super);
-
-    function CircleElement() {
-      console.log(window.Element);
-      console.log(this.__super__);
-      console.log("CircleElement");
-      CircleElement.__super__.constructor.call(this, arguments);
-    }
-
-    CircleElement.prototype.build = function() {
-      console.log("CircleElement.constructor");
-      console.log(this.scope);
-      return this.scope.append($("<element class=\"" + this.options["class"] + " circle-element\" style=\"background-color: '#" + this.scope + "'\"></element>"));
-    };
-
-    return CircleElement;
-
-  })(Element);
-
-}).call(this);
-(function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  window.Element = (function() {
-    var get_next_id,
+  window.BaseElement = (function() {
+    var _nextId,
       _this = this;
 
-    Element.last_id = 0;
+    BaseElement.lastId = 0;
 
-    Element.defaults = {
+    BaseElement.defaults = {
       "class": 'element',
       highlightClass: 'highlight-element'
     };
 
-    function Element(scope, options) {
+    function BaseElement(scope, options) {
       this.scope = scope;
-      this.options = options;
-      this.id = get_next_id();
-      this.options = $.extend({}, Element.defaults, this.options);
+      this.id = _nextId();
+      this.options = $.extend({}, BaseElement.defaults, options);
       this.build();
     }
 
-    Element.prototype.highlight = function() {
+    BaseElement.prototype.highlight = function() {
       return true;
     };
 
-    Element.prototype.build = function() {
+    BaseElement.prototype.build = function() {
       this.item = null;
       return true;
     };
 
-    Element.prototype.onFire = function(func) {
+    BaseElement.prototype.onFire = function(func) {
       return true;
     };
 
-    Element.prototype.onSuccess = function() {
+    BaseElement.prototype.onSuccess = function() {
       return true;
     };
 
-    get_next_id = function() {
-      return ++Element.last_id;
+    BaseElement.getLastId = function() {
+      return this.lastId;
     };
 
-    return Element;
+    _nextId = function() {
+      return ++BaseElement.lastId;
+    };
+
+    return BaseElement;
 
   }).call(this);
 
-  window.CircleElement = (function(_super) {
+}).call(this);
+(function() {
+  var _ref,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  window.CircleElement = (function(_super) {
     __extends(CircleElement, _super);
 
     function CircleElement() {
       this.handleClick = __bind(this.handleClick, this);
-
-      this.removeClassHighlight = __bind(this.removeClassHighlight, this);
-      return CircleElement.__super__.constructor.apply(this, arguments);
+      this.removeClassHighlight = __bind(this.removeClassHighlight, this);      _ref = CircleElement.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     CircleElement.prototype.build = function() {
       var color;
+
       color = Math.floor(Math.random() * 999);
       this.item = $("<element class=\"" + this.options["class"] + "\" style=\"background-color: #" + color + "\"></element>");
       this.item.data("element-id", this.id);
@@ -96,6 +75,7 @@
     CircleElement.prototype.highlight = function(onComplete) {
       var oldOnComplete,
         _this = this;
+
       if (typeof onComplete !== "function") {
         onComplete = function() {
           return _this.removeClassHighlight();
@@ -121,14 +101,13 @@
 
     return CircleElement;
 
-  })(Element);
+  })(BaseElement);
 
 }).call(this);
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   window.Game = (function() {
-
     Game.defaults = {
       timeout: 400,
       dataKey: 'element-id'
@@ -136,13 +115,11 @@
 
     function Game(elements, options) {
       var element, _i, _len, _ref;
+
       this.elements = elements;
-      this.options = options;
       this.handleClickOnElement = __bind(this.handleClickOnElement, this);
-
       this.bindClickOnElement = __bind(this.bindClickOnElement, this);
-
-      this.options = $.extend({}, Game.defaults, this.options);
+      this.options = $.extend({}, Game.defaults, options);
       if (!this.elements || this.elements.length === 0) {
         this.elements = [];
       }
@@ -161,29 +138,30 @@
 
     Game.prototype.play_round = function() {
       if (this.elements.length > 0) {
-        return this.current_round = new Round(++this.level, this.elements);
+        return this.currentRound = new Round(++this.level, this.elements);
       }
     };
 
     Game.prototype.game_over = function() {
       this.reset();
-      if (typeof this.options.on_game_over === "function") {
-        return this.options.on_game_over(this);
+      if (typeof this.options.game_over === "function") {
+        return this.options.game_over(this);
       }
     };
 
     Game.prototype.next_round = function() {
       var _this = this;
+
       return setTimeout(function() {
-        if (typeof _this.options.on_success === "function") {
-          _this.options.on_success(_this);
+        if (typeof _this.options.success === "function") {
+          _this.options.success(_this);
         }
         return _this.play_round();
       }, this.options.timeout);
     };
 
     Game.prototype.reset = function() {
-      this.current_round = null;
+      this.currentRound = null;
       return this.level = 0;
     };
 
@@ -194,14 +172,15 @@
     Game.prototype.handleClickOnElement = function(event) {
       var $element, $target,
         _this = this;
-      if (!this.current_round) {
+
+      if (!this.currentRound) {
         return;
       }
       $target = $(event.currentTarget);
       if (this.is_right_element($target)) {
-        $element = this.current_round.route.shift();
+        $element = this.currentRound.route.shift();
         return $element.highlight(function() {
-          if (_this.current_round.route.length === 0) {
+          if (_this.currentRound.route.length === 0) {
             return _this.next_round();
           }
         });
@@ -211,7 +190,7 @@
     };
 
     Game.prototype.is_right_element = function(target) {
-      return this.current_round.route[0].item.data(this.options.dataKey) === target.data(this.options.dataKey);
+      return this.currentRound.route[0].item.data(this.options.dataKey) === target.data(this.options.dataKey);
     };
 
     return Game;
@@ -220,7 +199,6 @@
 
 }).call(this);
 (function() {
-
   window.Memogame = (function() {
     var init_game;
 
@@ -230,9 +208,11 @@
 
     init_game = function() {
       var elements, i, scope;
+
       scope = $('live_board');
       elements = (function() {
         var _i, _results;
+
         _results = [];
         for (i = _i = 0; _i <= 4; i = ++_i) {
           _results.push(new CircleElement(scope));
@@ -240,10 +220,10 @@
         return _results;
       })();
       return new Game(elements, {
-        on_success: function(game) {
+        success: function(game) {
           return alert("Round " + (game.level + 1));
         },
-        on_game_over: function(game) {
+        game_over: function(game) {
           alert("Game Over");
           if (confirm("Do you want try again?")) {
             return game.start();

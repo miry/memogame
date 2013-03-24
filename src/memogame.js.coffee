@@ -6,10 +6,10 @@ class window.Memogame
     scope = $('live_board')
     elements = (new CircleElement(scope) for i in [0..4])
     new Game elements,
-      on_success: (game)->
+      success: (game)->
         alert("Round #{game.level+1}")
 
-      on_game_over: (game)->
+      game_over: (game)->
         alert("Game Over")
         if(confirm("Do you want try again?"))
           game.start()

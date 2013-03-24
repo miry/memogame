@@ -1,7 +1,6 @@
-
-module("ElementTest", {
+module("BaseElementTest", {
   setup: function() {
-    return this.subject = new Element;
+    return this.subject = new BaseElement();
   }
 });
 
@@ -11,11 +10,11 @@ test("should respond to to highlight", function() {
 
 test("should increment id", function() {
   var element;
-  equal(this.subject.id, Element.last_id);
-  element = new Element;
+
+  equal(this.subject.id, BaseElement.getLastId());
+  element = new BaseElement();
   return equal(element.id, this.subject.id + 1);
 });
-
 module("CircleElementTest", {
   setup: function() {
     return this.scope = $("board");
@@ -33,11 +32,11 @@ test("should add two circles", function() {
 
 test("should highlight an element", function() {
   var element;
+
   element = new CircleElement(this.scope);
   element.highlight();
   return ok(element.item.hasClass('highlight-element'), "Checking class highlight");
 });
-
 module("GameTest", {
   setup: function() {
     return this.subject = new Game;
@@ -50,21 +49,22 @@ test("should create a new instance", function() {
 
 test("should not start if there are no elements", function() {
   var game;
+
   game = new Game;
   equal(game.play_round(), void 0);
-  return equal(game.current_round, null);
+  return equal(game.currentRound, null);
 });
 
 test("should start a round with first level", function() {
   var game, round;
-  game = new Game([new Element]);
+
+  game = new Game([new BaseElement()]);
   round = game.play_round();
   return equal(round.difficult_level, 1, "First level");
 });
-
 module("RoundTest", {
   setup: function() {
-    return this.subject = new Round(10, [new Element, new Element]);
+    return this.subject = new Round(10, [new BaseElement, new BaseElement]);
   }
 });
 

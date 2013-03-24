@@ -3,10 +3,12 @@ class window.Game
     timeout: 400
     dataKey: 'element-id'
 
-  constructor: (@elements, @options) ->
-    @options = $.extend({}, Game.defaults, @options)
+  constructor: (@elements, options) ->
+    @options = $.extend({}, Game.defaults, options)
+
     if(!@elements || @elements.length == 0)
       @elements = []
+
     @reset()
 
     Round.defaults.timeout = @options.timeout
@@ -19,44 +21,41 @@ class window.Game
 
   play_round: () ->
     if(@elements.length > 0)
-      @current_round = new Round(++@level, @elements)
+      @currentRound = new Round ++@level, @elements
 
   game_over: () ->
     @reset()
 
-    if(typeof(@options.on_game_over) == "function")
-      @options.on_game_over(@)
-
+    if(typeof(@options.game_over) == "function")
+      @options.game_over(@)
 
   next_round: () ->
-    setTimeout ()=>
-      if(typeof(@options.on_success) == "function")
-        @options.on_success(@)
+    setTimeout () =>
+      if typeof(@options.success) == "function"
+        @options.success(@)
 
       @play_round()
     , @options.timeout
 
   reset: () ->
-    @current_round = null
+    @currentRound = null
     @level = 0
 
-
   bindClickOnElement: (element) =>
-    element.onFire= @handleClickOnElement
-
+    element.onFire = @handleClickOnElement
 
   handleClickOnElement: (event) =>
-    return if(!@current_round)
+    return if(!@currentRound)
 
     $target = $(event.currentTarget)
     if(@is_right_element($target))
-      $element = @current_round.route.shift()
+      $element = @currentRound.route.shift()
       $element.highlight ()=>
-        if(@current_round.route.length == 0)
+        if(@currentRound.route.length == 0)
           @next_round()
 
     else
       @game_over()
 
   is_right_element: (target) ->
-    @current_round.route[0].item.data(@options.dataKey) == target.data(@options.dataKey)
+    @currentRound.route[0].item.data(@options.dataKey) == target.data(@options.dataKey)

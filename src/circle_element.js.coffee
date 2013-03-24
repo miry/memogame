@@ -1,32 +1,4 @@
-class window.Element
-  @last_id = 0
-  @defaults =
-    class: 'element'
-    highlightClass: 'highlight-element'
-
-  constructor: (@scope, @options) ->
-    @id = get_next_id()
-
-    @options = $.extend({}, Element.defaults, @options);
-    @build()
-
-  highlight: () ->
-    true
-
-  build: () ->
-    @item = null
-    true
-
-  onFire: (func)->
-    true
-
-  onSuccess: ()->
-    true
-
-  get_next_id = () =>
-    ++@last_id
-
-class window.CircleElement extends Element
+class window.CircleElement extends BaseElement
   build: ()->
     color = Math.floor(Math.random() * 999)
     @item = $("<element class=\"#{@options.class}\" style=\"background-color: ##{color}\"></element>")
@@ -52,4 +24,3 @@ class window.CircleElement extends Element
 
   handleClick: (event)=>
     @onFire(event)
-
