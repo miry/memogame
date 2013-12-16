@@ -36,3 +36,7 @@ And run script
 ```javascript
 new Memogame().game.playRound()
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/miry/memogame/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
